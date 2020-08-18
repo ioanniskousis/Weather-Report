@@ -6,9 +6,9 @@
   <title>Weather-Report</title>
 </head>
 <body>
-  <header>
+  <!-- <header>
 
-  </header>
+  </header> -->
   <main id="main">
     <div id="citiesTableView">
       <div id="citiesTableHeader">
@@ -27,15 +27,14 @@
       </div>
     </div>
     <div id="weatherView">
-      <div id="weatherViewHeader">
-
-      </div>
+      <div id="weatherViewHeader"></div>
       <div id="weatherViewBody">
         <div id="weatherViewBodyTopPanel">
-          <div id="weatherViewTemperaturePanel">
-28
-          </div>
+          <div id="weatherViewTemperaturePanel" temperatureUnit="0"></div>
+          <div id="temperatureLabel">Temperature</div>
+          <div id="temperatureToggle">UNIT &deg;F / &deg;C</div>
         </div>
+        <p id="allData"></p>
       </div>
     </div>
   </main>

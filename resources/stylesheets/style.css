@@ -1,7 +1,7 @@
 :root {
   --body-bg-color: white;
   --header-bg-color: #27f;
-  --header-height: 60px;
+  --header-height: 0px;
   --cities-header-height: 80px;
   --main-background-color: #000;
   --cities-header-bg-color: #7af;
@@ -22,6 +22,7 @@ html {
   height: 100vh;
   padding: 0;
   margin: 0;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 body {
@@ -29,7 +30,6 @@ body {
   background-color: var(--body-bg-color);
   padding: 0;
   margin: 0;
-
 }
 
 header {
@@ -43,6 +43,7 @@ main {
   background-color: var(--main-background-color);
   width: 100%;
   height: calc(100% - var(--header-height));
+  border-top: 4px solid var(--header-bg-color);
   border-bottom: 4px solid var(--header-bg-color);
   border-right: 4px solid var(--header-bg-color);
 }
@@ -60,7 +61,7 @@ main {
   color: white;
 }
 
-#citiesTableView {
+#countriesTableView {
   visibility: hidden;
   display: none;
 }
@@ -101,7 +102,6 @@ main {
   padding: 0 10px 10px 10px;
 }
 
-
 .citiesTableRow,
 .countriesTableRow {
   margin-top: 10px;
@@ -111,7 +111,9 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 4px 10px;
+  cursor: pointer;
 }
+
 
 #weatherView {
   overflow: auto;
@@ -126,21 +128,53 @@ main {
 }
 
 #weatherViewBodyTopPanel {
+  position: relative;
   margin-top: 10px;
   height: 40%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.3);
+  /* background-color: rgba(255, 255, 255, 0.3); */
 }
 
 #weatherViewTemperaturePanel {
   /* width: 30vw; */
   padding: 0 40px;
   height: 100%;
-  font-size: 12vw;
-  background-color: rgba(50, 50, 50, 0.3);
+  font-size: 14vw;
+  /* background-color: rgba(50, 50, 50, 0.3); */
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#weatherViewTemperaturePanel > span {
+  font-size: 2vw;
+  margin-bottom: -7vw;
+  /* line-height: 12vw; */
+}
+
+#temperatureToggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  padding: 10px;
+}
+
+#temperatureToggle:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+#temperatureToggle:active {
+  background-color: rgba(100, 100, 100, 0.5);
+}
+
+#temperatureLabel {
+  position: absolute;
+  top: 10px;
+  width: 200px;
+  font-size: 18px;
+  text-align: center;
+  left: calc(50% - 100px);
 }

@@ -1,0 +1,146 @@
+:root {
+  --body-bg-color: white;
+  --header-bg-color: #27f;
+  --header-height: 60px;
+  --cities-header-height: 80px;
+  --main-background-color: #000;
+  --cities-header-bg-color: #7af;
+  --cities-body-bg-color: #57a;
+}
+
+* {
+  box-sizing: border-box;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+* ::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  height: 100%;
+  background-color: var(--body-bg-color);
+  padding: 0;
+  margin: 0;
+
+}
+
+header {
+  background-color: var(--header-bg-color);
+  height: var(--header-height);
+  margin: 0;
+}
+
+main {
+  position: relative;
+  background-color: var(--main-background-color);
+  width: 100%;
+  height: calc(100% - var(--header-height));
+  border-bottom: 4px solid var(--header-bg-color);
+  border-right: 4px solid var(--header-bg-color);
+}
+
+#citiesTableView,
+#countriesTableView {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30%;
+  /* min-width: 200px; */
+  height: 100%;
+  border-left: 4px solid var(--header-bg-color);
+  border-right: 4px solid var(--header-bg-color);
+  color: white;
+}
+
+#citiesTableView {
+  visibility: hidden;
+  display: none;
+}
+
+#citiesTableHeader,
+#countriesTableHeader,
+#weatherViewHeader {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: var(--cities-header-height);
+  /* background-color: var(--cities-header-bg-color); */
+  border-bottom: 4px solid var(--header-bg-color);
+  font-size: 28px;
+}
+
+#weatherViewHeader > p {
+  font-size: 48px;
+  /* background-color: #555; */
+  margin: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#citiesTableBody,
+#countriesTableBody,
+#weatherViewBody {
+  position: absolute;
+  left: 0;
+  top: var(--cities-header-height);
+  width: 100%;
+  height: calc(100% - var(--cities-header-height));
+  /* background-color: var(--cities-body-bg-color); */
+  overflow: auto;
+  padding: 0 10px 10px 10px;
+}
+
+
+.citiesTableRow,
+.countriesTableRow {
+  margin-top: 10px;
+  border: 1px solid #aaa;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 10px;
+}
+
+#weatherView {
+  overflow: auto;
+  position: absolute;
+  left: 30%;
+  width: 70%;
+  height: 100%;
+  /* background-color: #57a; */
+  overflow: auto;
+  padding: 0 10px;
+  color: white;
+}
+
+#weatherViewBodyTopPanel {
+  margin-top: 10px;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#weatherViewTemperaturePanel {
+  /* width: 30vw; */
+  padding: 0 40px;
+  height: 100%;
+  font-size: 12vw;
+  background-color: rgba(50, 50, 50, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

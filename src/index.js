@@ -10,6 +10,7 @@ import seed from './seed';
 // const toIndex = 2200;
 let citiesTB = null;
 let countriesTB = null;
+let loadStartTime = 0;
 
 function showSearchSource(index) {
   gel('searchCity').style.visibility = (index === 0 ? 'visible' : 'hidden');
@@ -174,6 +175,8 @@ function backgroundUpdate(index) {
     'sunshine.jpg',
     'clouds-scattered.jpg',
     'rain.jpg',
+    'haze.png',
+    'snow.jpg',
   ];
 
   const weatherBackground = gel('weatherBackground');
@@ -199,6 +202,14 @@ function renderWeatherDescription(weather) {
       backgroundUpdate(2);
       break;
     }
+    case 'haze': {
+      backgroundUpdate(3);
+      break;
+    }
+    case 'snow': {
+      backgroundUpdate(4);
+      break;
+    }
     default: {
       backgroundUpdate(0);
       break;
@@ -206,7 +217,14 @@ function renderWeatherDescription(weather) {
   }
 }
 
+function renderLoadTime() {
+  const loadEndTime = Date.now();
+  const loadTime = loadEndTime - loadStartTime;
+  gel('responseTimeContainer').innerHTML = 'response time '.concat(loadTime.toString()).concat(' msec');
+}
+
 function renderWeather(weather) {
+  renderLoadTime();
   const weatherView = gel('weatherView');
   const citiesTableView = gel('citiesTableView');
   const weatherViewStyle = window.getComputedStyle(weatherView);
@@ -234,6 +252,8 @@ function fetchCityWeather(url) {
 // fetchCityWeather(wURL);
 
 function loadCityData(cityCode) {
+  loadStartTime = Date.now();
+
   const weatherURL = 'https://api.openweathermap.org/data/2.5/weather?id=';
   const apiCode = '&appid=a832f5712931bcd07786d24b4290543e';
   const url = weatherURL.concat(cityCode).concat(apiCode);

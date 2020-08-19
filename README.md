@@ -75,7 +75,7 @@ This is a small Weather-Report application where the user can select a city from
   The main control is applied in index.js.  
   Partially,  
     - the model for countries is implemented in countriesDB.js creating a data set of countries stored in dist/countries.json  
-    - the model for cities is implemented in citiesDB.js creating a data set of cities stored in dist/cities.json 
+    - the model for cities is implemented in citiesDB.js creating a data set of cities stored in dist/cities.json   
     - the main consept is controlled in index.js  
       - first a callback function (citySelected) is supplied to the interface elements that represent a city (city buttons)  
       - the callback receives the requested city.  
@@ -83,7 +83,6 @@ This is a small Weather-Report application where the user can select a city from
       - the city weather data that arrived are passed to the interface module cityWeatherInterface.js   
     - the module cityWeatherInterface.js contains procedures to update the interface information with the new data  
 
-  * Data about Favorites are percistently saved in localStorage.  
   * An initial population is performed when the localStorage is empty of Favorites by data held in seed.js.  
   * Shorthand commands for creating and accessing elements are used and are held in utils.js.  
 
@@ -93,7 +92,7 @@ This is a small Weather-Report application where the user can select a city from
 
 ## Application Instructions  
 
-  * The application comes with some initial data held in seed.js file  
+  * The application comes with some initial data about the favotires cities held in seed.js file  
 
   * The favorite cities list is on the left. Clicking a city button  an http request is generated to get information about the weather at the requested city.  
 

@@ -2,7 +2,7 @@ import '../resources/stylesheets/style.css';
 import getCities from './citiesDB';
 import getCountries from './countriesDB';
 
-import { gel, appAlert } from './utils';
+import { gel, crel, appAlert, gat, sat } from './utils';
 import favouriteCitiesDB from './favouriteCities';
 import seed from './seed';
 
@@ -26,16 +26,16 @@ const TEMPER_FARENEIT = 0;
 const TEMPER_CELCIUS = 1;
 
 function renderCity(city) {
-  const citiesTableBody = document.getElementById('citiesTableBody');
+  const citiesTableBody = gel('citiesTableBody');
   if (city.country) {
-    const row = document.createElement('div');
-    row.setAttribute('datafield', 'city');
-    row.setAttribute('citycode', city.id);
+    const row = crel('div');
+    sat(row, 'datafield', 'city');
+    sat(row, 'citycode', city.id);
     row.className = 'citiesTableRow';
-    const cityName = document.createElement('div');
+    const cityName = crel('div');
     cityName.innerHTML = city.name;
 
-    const countryName = document.createElement('div');
+    const countryName = crel('div');
     countryName.innerHTML = city.country;
 
     row.appendChild(cityName);
@@ -43,14 +43,6 @@ function renderCity(city) {
     citiesTableBody.appendChild(row);
 
     row.addEventListener('click', () => {
-      const weatherView = gel('weatherView');
-      const visible = weatherView.style.visibility === 'visible';
-      if (!visible) {
-        gel('citiesTableView').style.display = 'none';
-        gel('weatherView').style.display = 'block';
-        gel('citiesTableView').style.visibility = 'hidden';
-        gel('weatherView').style.visibility = 'visible';
-      }
       const cityCode = row.getAttribute('citycode');
       // eslint-disable-next-line no-use-before-define
       loadCityData(cityCode);
@@ -71,14 +63,14 @@ function renderCities(cities) {
 
 function renderCountry(country) {
   const citiesTableBody = document.getElementById('citiesTableBody');
-  const row = document.createElement('div');
+  const row = crel('div');
   row.setAttribute('datafield', 'country');
   row.setAttribute('countrycode', country.code);
   row.className = 'citiesTableRow';
-  const countryName = document.createElement('div');
+  const countryName = crel('div');
   countryName.innerHTML = country.name;
 
-  const countryCode = document.createElement('div');
+  const countryCode = crel('div');
   countryCode.innerHTML = country.code;
 
   row.appendChild(countryName);
@@ -129,26 +121,29 @@ function setCountriesTable(countries) {
 getCities(setCitiesTable);
 getCountries(setCountriesTable);
 
-function renderTemperaturePanel(temperatureData) {
+function temperatureFormat(temperatureKelvin) {
   const weatherViewTemperaturePanel = document.getElementById('weatherViewTemperaturePanel');
-  weatherViewTemperaturePanel.setAttribute('temperatureData', temperatureData.toString());
-  const temperatureUnit = parseInt(weatherViewTemperaturePanel.getAttribute('temperatureUnit'), 10);
+  const temperatureUnit = parseInt(gat(weatherViewTemperaturePanel, 'temperatureUnit'), 10);
   if (temperatureUnit === TEMPER_FARENEIT) {
-    const temperature = (temperatureData * (9.0 / 5.0)) - 459.67;
-    weatherViewTemperaturePanel.innerHTML = parseInt(temperature, 10).toString().concat('<span>&deg;F</span>');
-  } else if (temperatureUnit === TEMPER_CELCIUS) {
-    const temperature = temperatureData - 273.15;
-    weatherViewTemperaturePanel.innerHTML = parseInt(temperature, 10).toString().concat('<span>&deg;C</span>');
+    return (temperatureKelvin * (9.0 / 5.0)) - 459.67;
   }
+  return temperatureKelvin - 273.15;
+
+}
+
+function renderTemperaturePanel(temperatureKelvin) {
+  const weatherViewTemperaturePanel = document.getElementById('weatherViewTemperaturePanel');
+  const temperatureUnit = parseInt(gat(weatherViewTemperaturePanel, 'temperatureUnit'), 10);
+  const span = temperatureUnit === 0 ? '<span>&deg;F</span>' : '<span>&deg;C</span>';
+  sat(weatherViewTemperaturePanel, 'temperatureData', temperatureKelvin.toString());
+  const tempFormated = parseInt(temperatureFormat(temperatureKelvin), 10).toString().concat(span);
+  weatherViewTemperaturePanel.innerHTML = tempFormated;
 }
 
 function renderWeatherHeader(weather) {
-  // const weatherViewHeader = document.getElementById('weatherViewHeader');
-  // weatherViewHeader.innerHTML = '';
   const city = weather.name;
   const cityLab = gel('weatherCityName');
   cityLab.innerHTML = city;
-  // weatherViewHeader.appendChild(cityLab);
 }
 
 function renderRawData(weather) {
@@ -156,11 +151,75 @@ function renderRawData(weather) {
   allData.innerHTML = 'Data : '.concat(JSON.stringify(weather));
 }
 
+function renderMin(min) {
+  gel('minContainer').innerHTML = 'min : '.concat(min.toFixed(2));
+}
+
+function renderMax(max) {
+  gel('maxContainer').innerHTML = 'max : '.concat(max.toFixed(2));
+}
+
+function renderMinMaxTemperatures(weather) {
+  const min = temperatureFormat(parseFloat(weather.main.temp_min));
+  const max = temperatureFormat(parseFloat(weather.main.temp_max));
+  sat(gel('minContainer'), 'temperatureData', weather.main.temp_min);
+  sat(gel('maxContainer'), 'temperatureData', weather.main.temp_max);
+
+  renderMin(min);
+  renderMax(max);
+}
+
+function backgroundUpdate(index) {
+  const images = [
+    'sunshine.jpg',
+    'clouds-scattered.jpg',
+    'rain.jpg',
+  ];
+
+  const weatherBackground = gel('weatherBackground');
+  const url = '../resources/images/'.concat(images[index]);
+  weatherBackground.style.backgroundImage = 'url(\''.concat(url).concat('\')');
+}
+
+function renderWeatherDescription(weather) {
+  const weatherMain = gel('weatherMain');
+  const weatherDescription = gel('weatherDescription');
+  const wmain = weather.weather[0].main;
+  const wdes = weather.weather[0].description;
+  weatherMain.innerHTML = wmain;
+  weatherDescription.innerHTML = wdes;
+
+  const wmainLow = wmain.toLowerCase();
+  switch (wmainLow) {
+    case 'clouds': {
+      backgroundUpdate(1);
+      break;
+    }
+    case 'rain': {
+      backgroundUpdate(2);
+      break;
+    }
+    default: {
+      backgroundUpdate(0);
+      break;
+    }
+  }
+}
+
 function renderWeather(weather) {
+  const weatherView = gel('weatherView');
+  const citiesTableView = gel('citiesTableView');
+  const weatherViewStyle = window.getComputedStyle(weatherView);
+  if (weatherViewStyle.display === 'none') {
+    weatherView.style.display = 'block';
+    citiesTableView.style.display = 'none';
+  }
   renderWeatherHeader(weather);
-  renderRawData(weather);
+  // renderRawData(weather);
 
   renderTemperaturePanel(parseFloat(weather.main.temp));
+  renderMinMaxTemperatures(weather);
+  renderWeatherDescription(weather);
 
 }
 
@@ -209,6 +268,11 @@ gel('temperatureToggle').addEventListener('click', () => {
 
   const temperatureData = parseInt(weatherViewTemperaturePanel.getAttribute('temperatureData'), 10);
   renderTemperaturePanel(temperatureData);
+
+  const min = temperatureFormat(parseFloat(gat(gel('minContainer'), 'temperatureData')));
+  const max = temperatureFormat(parseFloat(gat(gel('maxContainer'), 'temperatureData')));
+  renderMin(min);
+  renderMax(max);
 });
 
 function findCities(src) {
@@ -292,3 +356,13 @@ gel('searchCountryButton').addEventListener('click', () => {
   const srcCountries = findCountries(searchCountryInput.value);
   renderCountries(srcCountries);
 });
+
+
+function listenToBackArrow() {
+  const arrow = gel('arrowLeft');
+  arrow.addEventListener('click', () => {
+    gel('citiesTableView').style.display = 'block';
+    gel('weatherView').style.display = 'none';
+  });
+}
+listenToBackArrow();

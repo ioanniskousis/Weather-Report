@@ -123,15 +123,23 @@ function appConfirm(callBack, args, title, text) {
   opac(backView);
 }
 
+function gat(element, attribute) {
+  return element.getAttribute(attribute);
+}
+
+function sat(element, attribute, value) {
+  element.setAttribute(attribute, value);
+}
+
 export {
   gel,
   gelc,
   crel,
   doc,
-  // maximize,
-  // minimize,
   appAlert,
   appConfirm,
   opac,
   trans,
+  gat,
+  sat,
 };

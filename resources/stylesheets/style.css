@@ -46,19 +46,24 @@ main {
   background-color: var(--main-background-color);
   width: 100%;
   height: calc(100% - var(--header-height));
-  border-top: 4px solid var(--header-bg-color);
+  /* border-top: 4px solid var(--header-bg-color);
   border-bottom: 4px solid var(--header-bg-color);
-  border-right: 4px solid var(--header-bg-color);
+  border-right: 4px solid var(--header-bg-color); */
+  border: 4px solid var(--header-bg-color);
+  display: flex;
 }
 
 #citiesTableView {
-  position: absolute;
+  /* position: absolute;
   left: 0;
   top: 0;
-  width: 30%;
+  width: 30%; */
+  position: relative;
+  border-right: 1px solid #cee;
+  flex: 1;
   /* min-width: 200px; */
   height: 100%;
-  border: 4px solid var(--header-bg-color);
+  border-right: 4px solid var(--header-bg-color);
   /* border-right: 4px solid var(--header-bg-color); */
   color: white;
 }
@@ -80,16 +85,25 @@ main {
 
 #weatherViewHeader {
   height: var(--weather-header-height);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-#weatherViewHeader > p {
-  font-size: 42px;
+#weatherCityName {
+  font-size: 36px;
   /* background-color: #555; */
   margin: 0;
-  height: 100%;
+  flex: 4;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+#weatherCountryName {
+  flex: 4;
+  font-size: 16px;
+  font-variant: small-caps;
 }
 
 #searchCity,
@@ -99,7 +113,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #888;
+  /* background-color: #888; */
 }
 
 
@@ -147,10 +161,11 @@ main {
 .citiesTabsBar {
   width: 100%;
   height: 76px;
-  background-color: #666;
+  /* background-color: #666; */
   display: flex;
   justify-content: center;
   align-items: center;
+  font-variant: small-caps;
 }
 
 .citiesTab {
@@ -225,18 +240,21 @@ main {
 }
 
 #weatherView {
-  overflow: auto;
+  /* overflow: auto;
   position: absolute;
   left: 30%;
   width: 70%;
-  height: 100%;
+  height: 100%; */
+  position: relative;
+  display: block;
+  flex: 2;
   /* background-color: #57a; */
-  overflow: auto;
+  /* overflow: auto; */
   padding: 0 10px;
   color: white;
-  border: ;
-  border: 4px solid var(--header-bg-color);
-  border-left: none;
+  /* border: ; */
+  /* border: 4px solid var(--header-bg-color); */
+  /* border-left: none; */
 
 }
 
@@ -292,9 +310,9 @@ main {
   left: calc(50% - 100px);
 }
 
-.arrowLeft {
-  width: 60px;
-  height: 50px;
+#arrowLeft {
+  width: 80px;
+  height: 100%;
   background-image: url('../images/arrow-left-white.png');
   background-position: center center;
   background-repeat: no-repeat;
@@ -306,37 +324,85 @@ main {
   visibility: hidden;
 }
 
-.arrowLeft:hover {
+#arrowLeft:hover {
   background-color: rgba(255, 255, 255, 0.5);
   background-image: url('../images/arrow-left.png');
 }
 
+#minmaxContainer,
+#weatherDescriptionContainer {
+  height: 60px;
+  display: flex;
+  border-top: 1px solid #555;
+  border-bottom: 1px solid #555;
+  padding: 0 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#minContainer,
+#maxContainer,
+#weatherMain,
+#weatherDescription {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  color: white;
+}
+
+#minContainer {
+  justify-content: flex-start;
+  font-variant: small-caps;
+}
+
+#maxContainer {
+  justify-content: flex-end;
+  font-variant: small-caps;
+}
+
+#weatherMain,
+#weatherDescription  {
+  justify-content: center;
+  font-variant: small-caps;
+}
+
+#weatherBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background-color: rgba(255, 255, 255, 0.3); */
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  opacity: 0.5;
+}
 
 @media screen and (max-width: 768px) {
-  .projectsSideBar {
-    border: none;
-  }
-
-  .main {
+  main {
     flex-direction: column;
   }
 
-  .viewPlaceHolder {
-    font-size: 3vw;
+  #citiesTableView {
+    border: none;
   }
 
   #citiesTableView,
   #citiesTableView {
     width: 100%;
-    border: 4px solid var(--header-bg-color);
   }
 
-  .arrowLeft {
+  #arrowLeft {
     visibility: visible;
   }
 
-  /* #citiesTableView {
-    visibility: hidden;
+  #weatherViewTemperaturePanel {
+    font-size: 20vw;
+  }
 
-  } */
+  #weatherViewTemperaturePanel > span {
+    font-size: 4vw;
+    margin-bottom: -10vw;
+  }
 }

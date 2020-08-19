@@ -1,12 +1,15 @@
 :root {
   --body-bg-color: white;
-  --header-bg-color: #27f;
+  --header-bg-color: rgb(48, 136, 203);
   --header-height: 0px;
-  --cities-header-height: 80px;
+  --cities-header-height: 140px;
+  --weather-header-height: 60px;
   --main-background-color: #000;
   --cities-header-bg-color: #7af;
   --cities-body-bg-color: #57a;
 }
+
+/* #27f; */
 
 * {
   box-sizing: border-box;
@@ -48,26 +51,19 @@ main {
   border-right: 4px solid var(--header-bg-color);
 }
 
-#citiesTableView,
-#countriesTableView {
+#citiesTableView {
   position: absolute;
   left: 0;
   top: 0;
   width: 30%;
   /* min-width: 200px; */
   height: 100%;
-  border-left: 4px solid var(--header-bg-color);
-  border-right: 4px solid var(--header-bg-color);
+  border: 4px solid var(--header-bg-color);
+  /* border-right: 4px solid var(--header-bg-color); */
   color: white;
 }
 
-#countriesTableView {
-  visibility: hidden;
-  display: none;
-}
-
 #citiesTableHeader,
-#countriesTableHeader,
 #weatherViewHeader {
   position: absolute;
   left: 0;
@@ -77,16 +73,117 @@ main {
   /* background-color: var(--cities-header-bg-color); */
   border-bottom: 4px solid var(--header-bg-color);
   font-size: 28px;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
+#weatherViewHeader {
+  height: var(--weather-header-height);
 }
 
 #weatherViewHeader > p {
-  font-size: 48px;
+  font-size: 42px;
   /* background-color: #555; */
   margin: 0;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#searchCity,
+#searchCountry {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #888;
+}
+
+
+#searchCountry {
+  visibility: hidden;
+  display: none;
+}
+
+#searchCityInput,
+#searchCountryInput {
+  margin: auto 5px auto 10px;
+  font-size: medium;
+  padding: 10px 20px;
+  border: none;
+  background-color: black;
+  color: white;
+  outline: none;
+  width: calc(100% - 70px);
+  border: 1px solid #555;
+}
+
+#searchCityButton,
+#searchCountryButton {
+  width: 40px;
+  height: 40px;
+  margin: auto 10px auto 5px;
+  display: inline-block;
+  background-image: url('../images/search.png');
+  background-position: center;
+  background-size: 50%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+#searchCityButton:hover,
+#searchCountryButton:hover {
+  background-color: #555;
+}
+
+#searchCityButton:active,
+#searchCountryButton:active {
+  background-color: #888;
+}
+
+.citiesTabsBar {
+  width: 100%;
+  height: 76px;
+  background-color: #666;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.citiesTab {
+  /* width: 30%; */
+  flex: 1;
+  margin: 30px 5px 0 5px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  background-color: #333;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.citiesTabSelected {
+  background-color: #777;
+  box-shadow: 0 0 4px 4px rgba(255, 255, 255, 0.5);
+} 
+
+.citiesTabsBar div:hover {
+  background-color: #555;
+}
+
+.citiesTabsBar div:active {
+  background-color: #777;
+  cursor: pointer;
 }
 
 #citiesTableBody,
@@ -102,6 +199,11 @@ main {
   padding: 0 10px 10px 10px;
 }
 
+#weatherViewBody {
+  top: var(--weather-header-height);
+  height: calc(100% - var(--weather-header-height));
+}
+
 .citiesTableRow,
 .countriesTableRow {
   margin-top: 10px;
@@ -114,6 +216,13 @@ main {
   cursor: pointer;
 }
 
+.citiesTableRow:hover {
+  background-color: #555;
+}
+
+.citiesTableRow:active {
+  background-color: #888;
+}
 
 #weatherView {
   overflow: auto;
@@ -125,6 +234,10 @@ main {
   overflow: auto;
   padding: 0 10px;
   color: white;
+  border: ;
+  border: 4px solid var(--header-bg-color);
+  border-left: none;
+
 }
 
 #weatherViewBodyTopPanel {
@@ -177,4 +290,53 @@ main {
   font-size: 18px;
   text-align: center;
   left: calc(50% - 100px);
+}
+
+.arrowLeft {
+  width: 60px;
+  height: 50px;
+  background-image: url('../images/arrow-left-white.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 32px 32px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  visibility: hidden;
+}
+
+.arrowLeft:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  background-image: url('../images/arrow-left.png');
+}
+
+
+@media screen and (max-width: 768px) {
+  .projectsSideBar {
+    border: none;
+  }
+
+  .main {
+    flex-direction: column;
+  }
+
+  .viewPlaceHolder {
+    font-size: 3vw;
+  }
+
+  #citiesTableView,
+  #citiesTableView {
+    width: 100%;
+    border: 4px solid var(--header-bg-color);
+  }
+
+  .arrowLeft {
+    visibility: visible;
+  }
+
+  /* #citiesTableView {
+    visibility: hidden;
+
+  } */
 }

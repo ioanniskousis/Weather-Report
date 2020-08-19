@@ -12,22 +12,37 @@
   <main id="main">
     <div id="citiesTableView">
       <div id="citiesTableHeader">
-
+        <div id="searchCity">
+          <input type="text" id="searchCityInput" placeholder="search city"/>
+          <div id="searchCityButton"></div>
+        </div>
+        <div id="searchCountry">
+          <input type="text" id="searchCountryInput" placeholder="search country"/>
+          <div id="searchCountryButton"></div>
+        </div>
+        <div class="citiesTabsBar">
+          <div class="citiesTab citiesTabSelected" data="Favourites">Favourites</div>
+          <div class="citiesTab" data="Cities">Cities</div>
+          <div class="citiesTab" data="Countries">Countries</div>
+        </div>
       </div>
       <div id="citiesTableBody">
 
       </div>
     </div>
-    <div id="countriesTableView">
+    <!-- <div id="countriesTableView">
       <div id="countriesTableHeader">
-
+        
       </div>
       <div id="countriesTableBody">
 
       </div>
-    </div>
+    </div> -->
     <div id="weatherView">
-      <div id="weatherViewHeader"></div>
+      <div id="weatherViewHeader">
+        <div class="arrowLeft"></div>
+        <p id="weatherCityName"></p>
+      </div>
       <div id="weatherViewBody">
         <div id="weatherViewBodyTopPanel">
           <div id="weatherViewTemperaturePanel" temperatureUnit="0"></div>

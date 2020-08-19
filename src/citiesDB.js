@@ -18,4 +18,20 @@ function getCities(callBack) {
     .catch((err) => appAlert('Error : '.concat(err)));
 }
 
-export default getCities;
+function findCities(citiesTB, src) {
+  const citiesFound = [];
+  for (let index = 0; index < citiesTB.length; index += 1) {
+    const element = citiesTB[index];
+    const compareName = element.name.toUpperCase();
+    const compareSrc = src.toUpperCase();
+    if (compareName.includes(compareSrc)) {
+      citiesFound.push(element);
+    }
+  }
+  return citiesFound;
+}
+
+export {
+  getCities,
+  findCities,
+};

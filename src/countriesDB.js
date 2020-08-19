@@ -13,4 +13,20 @@ function getCountries(callBack) {
     .catch((err) => appAlert('Error : '.concat(err)));
 }
 
-export default getCountries;
+function findCountries(countriesTB, src) {
+  const countriesFound = [];
+  for (let index = 0; index < countriesTB.length; index += 1) {
+    const element = countriesTB[index];
+    const compareName = element.name.toUpperCase();
+    const compareSrc = src.toUpperCase();
+    if (compareName.includes(compareSrc)) {
+      countriesFound.push(element);
+    }
+  }
+  return countriesFound;
+}
+
+export {
+  getCountries,
+  findCountries,
+};

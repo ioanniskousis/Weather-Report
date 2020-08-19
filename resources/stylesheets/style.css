@@ -1,7 +1,11 @@
+* ::-webkit-scrollbar {
+  display: none;
+}
+
 :root {
   --body-bg-color: white;
   --header-bg-color: rgb(48, 136, 203);
-  --header-height: 0px;
+  --header-height: 0;
   --cities-header-height: 140px;
   --weather-header-height: 60px;
   --main-background-color: #000;
@@ -13,10 +17,6 @@
   box-sizing: border-box;
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-
-* ::-webkit-scrollbar {
-  display: none;
 }
 
 html {
@@ -50,7 +50,6 @@ main {
 
 #citiesTableView {
   position: relative;
-  border-right: 1px solid #cee;
   flex: 1;
   height: 100%;
   border-right: 4px solid var(--header-bg-color);
@@ -85,6 +84,7 @@ main {
   justify-content: center;
   align-items: center;
 }
+
 #weatherCountryName {
   flex: 4;
   font-size: 16px;
@@ -101,7 +101,6 @@ main {
   align-items: center;
 }
 
-
 #searchCountry {
   visibility: hidden;
   display: none;
@@ -112,7 +111,6 @@ main {
   margin: auto 5px auto 10px;
   font-size: medium;
   padding: 10px 20px;
-  border: none;
   background-color: black;
   color: white;
   outline: none;
@@ -174,7 +172,7 @@ main {
 .citiesTabSelected {
   background-color: #777;
   box-shadow: 0 0 4px 4px rgba(255, 255, 255, 0.5);
-} 
+}
 
 .citiesTabsBar div:hover {
   background-color: #555;
@@ -331,7 +329,7 @@ main {
 }
 
 #weatherMain,
-#weatherDescription  {
+#weatherDescription {
   justify-content: center;
   font-variant: small-caps;
   font-variant-caps: all-small-caps;
@@ -399,7 +397,7 @@ main {
   }
 
   #citiesTableView,
-  #citiesTableView {
+  #weatherView {
     width: 100%;
   }
 

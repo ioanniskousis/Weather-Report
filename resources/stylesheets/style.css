@@ -2,17 +2,6 @@
   display: none;
 }
 
-:root {
-  --body-bg-color: white;
-  --header-bg-color: rgb(48, 136, 203);
-  --header-height: 0;
-  --cities-header-height: 140px;
-  --weather-header-height: 60px;
-  --main-background-color: #000;
-  --cities-header-bg-color: #7af;
-  --cities-body-bg-color: #57a;
-}
-
 * {
   box-sizing: border-box;
   -ms-overflow-style: none;
@@ -28,23 +17,17 @@ html {
 
 body {
   height: 100%;
-  background-color: var(--body-bg-color);
+  background-color: white;
   padding: 0;
-  margin: 0;
-}
-
-header {
-  background-color: var(--header-bg-color);
-  height: var(--header-height);
   margin: 0;
 }
 
 main {
   position: relative;
-  background-color: var(--main-background-color);
+  background-color: #000;
   width: 100%;
-  height: calc(100% - var(--header-height));
-  border: 4px solid var(--header-bg-color);
+  height: 100%;
+  border: 4px solid rgb(48, 136, 203);
   display: flex;
 }
 
@@ -52,7 +35,7 @@ main {
   position: relative;
   flex: 1;
   height: 100%;
-  border-right: 4px solid var(--header-bg-color);
+  border-right: 4px solid rgb(48, 136, 203);
   color: white;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -63,13 +46,13 @@ main {
   left: 0;
   top: 0;
   width: 100%;
-  height: var(--cities-header-height);
-  border-bottom: 4px solid var(--header-bg-color);
+  height: 140px;
+  border-bottom: 4px solid rgb(48, 136, 203);
   font-size: 28px;
 }
 
 #weatherViewHeader {
-  height: var(--weather-header-height);
+  height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -188,16 +171,16 @@ main {
 #weatherViewBody {
   position: absolute;
   left: 0;
-  top: var(--cities-header-height);
+  top: 140px;
   width: 100%;
-  height: calc(100% - var(--cities-header-height));
+  height: calc(100% - 140px);
   overflow: auto;
   padding: 0 10px 10px 10px;
 }
 
 #weatherViewBody {
-  top: var(--weather-header-height);
-  height: calc(100% - var(--weather-header-height));
+  top: 60px;
+  height: calc(100% - 60px);
 }
 
 .citiesTableRow,

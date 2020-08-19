@@ -43,7 +43,7 @@
   </p>
 </p>
 
-This is a small Weather-Report application where the user can select a city from a list and retreive the weather information about the requested city.
+This is a small Weather-Report application where the user can select a city from a list and retreive the weather information about the requested city. Available more than 200.000 location  
 
 <hr />
 
@@ -93,6 +93,7 @@ This is a small Weather-Report application where the user can select a city from
 ## Application Instructions  
 
   * The application comes with some initial data about the favotires cities held in seed.js file  
+  * Also, there are 200.000 locations to be invoked  
 
   * The favorite cities list is on the left. Clicking a city button  an http request is generated to get information about the weather at the requested city.  
 

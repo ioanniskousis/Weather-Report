@@ -134,7 +134,7 @@ main {
   font-variant-caps: all-small-caps;
 }
 
-.citiesTab {
+.explorerTab {
   flex: 1;
   margin: 30px 5px 0 5px;
   padding: 10px;
@@ -152,7 +152,7 @@ main {
   -webkit-user-select: none;
 }
 
-.citiesTabSelected {
+.explorerTabSelected {
   background-color: #777;
   box-shadow: 0 0 4px 4px rgba(255, 255, 255, 0.5);
 }

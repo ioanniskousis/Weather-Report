@@ -1,13 +1,15 @@
 import '../resources/stylesheets/style.css';
-import { getCities, findCities } from './citiesDB';
+import { getCities, findCities, loadCountryCities } from './citiesDB';
 import { getCountries, findCountries } from './countriesDB';
-import renderCountries from './countriesInterface';
-import renderCities from './citiesInterface';
-import { renderWeather, addWeatherListeners, renderLoadTime } from './cityWeatherInterface';
+import { renderCountries, watchCountrySearchButton } from './countriesInterface';
+import { renderCities, watchCitySearchButton } from './citiesInterface';
+import { renderWeather, watchWeatherViewControls, renderLoadTime } from './cityWeatherInterface';
 import downloadCityData from './weatherAPI';
 import { gel } from './utils';
 import favouriteCitiesDB from './favouriteCities';
 import seed from './seed';
+import { resetCityTabs, watchExplorerTabs } from './explorerTabs';
+import './window';
 
 const favouriteCities = favouriteCitiesDB();
 if (favouriteCities.cities.length === 0) seed(favouriteCities);
@@ -15,68 +17,43 @@ if (favouriteCities.cities.length === 0) seed(favouriteCities);
 let citiesTB = null;
 let countriesTB = null;
 
-function citiesDatabaseArrived(cities) {
+function citiesDatabaseArrivedCallBack(cities) {
   citiesTB = cities;
 }
 
-function countriesDatabaseArrived(countries) {
+function countriesDatabaseArrivedCallBack(countries) {
   countriesTB = countries;
 }
 
-function cityWeatherArrived(data, startTime) {
+function cityWeatherArrivedCallBack(data, startTime) {
   renderLoadTime(startTime);
   renderWeather(data);
 }
 
-function citySelected(cityCode) {
-  downloadCityData(cityCode, cityWeatherArrived);
+function citySelectedCallBack(cityCode) {
+  downloadCityData(cityCode, cityWeatherArrivedCallBack);
 }
 
-function resize() {
-  if (window.innerWidth > 768) {
-    gel('citiesTableView').style.display = 'block';
-    gel('weatherView').style.display = 'block';
-  } else {
-    gel('citiesTableView').style.display = 'block';
-    gel('weatherView').style.display = 'none';
-  }
+function countrySelectedCallBack(countryCode) {
+  const countryCities = loadCountryCities(citiesTB, countryCode);
+  resetCityTabs(1);
+  renderCities(countryCities, citySelectedCallBack);
 }
 
-function resetCityTabs(citiesTabs, index) {
-  for (let i = 0; i < citiesTabs.length; i += 1) {
-    const element = citiesTabs[i];
-    element.className = 'citiesTab';
-  }
-  if (index > -1) citiesTabs[index].className = 'citiesTab citiesTabSelected';
-}
-
-function loadCountryCities(code) {
-  const countryCities = [];
-  for (let index = 0; index < citiesTB.length; index += 1) {
-    const element = citiesTB[index];
-    if (element.country === code) {
-      countryCities.push(element);
-    }
-  }
-  const citiesTabs = document.getElementsByClassName('citiesTab');
-  resetCityTabs(citiesTabs, 1);
-  renderCities(countryCities, citySelected);
-}
-
-function selectCityTab(citiesTabs, index) {
-  resetCityTabs(citiesTabs, index);
+function explorerTabSelectedCallBack(index) {
+  resetCityTabs(index);
 
   switch (index) {
     case 0: {
-      renderCities(favouriteCities.cities, citySelected);
+      renderCities(favouriteCities.cities, citySelectedCallBack);
       break;
     }
     case 1: {
-      renderCities(citiesTB, citySelected);
+      renderCities(citiesTB, citySelectedCallBack);
       break;
     }
     case 2: {
-      renderCountries(countriesTB, loadCountryCities);
+      renderCountries(countriesTB, countrySelectedCallBack);
       break;
     }
     default:
@@ -84,44 +61,27 @@ function selectCityTab(citiesTabs, index) {
   }
 }
 
-function addListeners() {
-  addWeatherListeners();
-
-  const citiesTabs = document.getElementsByClassName('citiesTab');
-  for (let index = 0; index < citiesTabs.length; index += 1) {
-    const element = citiesTabs[index];
-    element.addEventListener('click', () => {
-      selectCityTab(citiesTabs, index);
-    });
-  }
-
-  gel('searchCityButton').addEventListener('click', () => {
-    const tabs = document.getElementsByClassName('citiesTab');
-    resetCityTabs(tabs, 1);
-    const searchCityInput = gel('searchCityInput');
-    const srcCities = findCities(citiesTB, searchCityInput.value);
-    renderCities(srcCities, citySelected);
-  });
-
-  gel('searchCountryButton').addEventListener('click', () => {
-    const tabs = document.getElementsByClassName('citiesTab');
-    resetCityTabs(tabs, 2);
-    const searchCountryInput = gel('searchCountryInput');
-    const srcCountries = findCountries(countriesTB, searchCountryInput.value);
-    renderCountries(srcCountries, loadCountryCities);
-  });
-
-  window.addEventListener('resize', () => {
-    resize();
-  });
-
-  window.addEventListener('load', () => {
-    resize();
-  });
+function findCitiesLike() {
+  resetCityTabs(1);
+  const searchCityInput = gel('searchCityInput');
+  const srcCities = findCities(citiesTB, searchCityInput.value);
+  renderCities(srcCities, citySelectedCallBack);
 }
 
-getCities(citiesDatabaseArrived);
-getCountries(countriesDatabaseArrived);
-renderCities(favouriteCities.cities, citySelected);
-addListeners();
-downloadCityData('2643743', cityWeatherArrived);
+function findCountriesLike() {
+  resetCityTabs(2);
+  const searchCountryInput = gel('searchCountryInput');
+  const srcCountries = findCountries(countriesTB, searchCountryInput.value);
+  renderCountries(srcCountries, countrySelectedCallBack);
+}
+
+getCountries(countriesDatabaseArrivedCallBack);
+getCities(citiesDatabaseArrivedCallBack);
+renderCities(favouriteCities.cities, citySelectedCallBack);
+
+watchWeatherViewControls();
+watchExplorerTabs(explorerTabSelectedCallBack);
+watchCitySearchButton(findCitiesLike);
+watchCountrySearchButton(findCountriesLike);
+
+downloadCityData('2643743', cityWeatherArrivedCallBack);

@@ -102,34 +102,35 @@ function renderWeather(weather) {
     citiesTableView.style.display = 'none';
   }
   renderWeatherHeader(weather);
-  // renderRawData(weather);
 
   renderTemperaturePanel(parseFloat(weather.main.temp));
   renderMinMaxTemperatures(weather);
   renderWeatherDescription(weather);
 }
 
-function addWeatherListeners() {
-  gel('temperatureToggle').addEventListener('click', () => {
-    const weatherViewTemperaturePanel = document.getElementById('weatherViewTemperaturePanel');
-    const temperatureUnit = parseInt(weatherViewTemperaturePanel.getAttribute('temperatureUnit'), 10);
-    const newUnit = temperatureUnit === 0 ? 1 : 0;
-    weatherViewTemperaturePanel.setAttribute('temperatureUnit', newUnit.toString());
+function toggleUnits() {
+  const weatherViewTemperaturePanel = document.getElementById('weatherViewTemperaturePanel');
+  const temperatureUnit = parseInt(weatherViewTemperaturePanel.getAttribute('temperatureUnit'), 10);
+  const newUnit = temperatureUnit === 0 ? 1 : 0;
+  weatherViewTemperaturePanel.setAttribute('temperatureUnit', newUnit.toString());
 
-    const temperatureData = parseInt(weatherViewTemperaturePanel.getAttribute('temperatureData'), 10);
-    renderTemperaturePanel(temperatureData);
+  const temperatureData = parseInt(weatherViewTemperaturePanel.getAttribute('temperatureData'), 10);
+  renderTemperaturePanel(temperatureData);
 
-    const min = temperatureFormat(parseFloat(gat(gel('minContainer'), 'temperatureData')));
-    const max = temperatureFormat(parseFloat(gat(gel('maxContainer'), 'temperatureData')));
-    renderMin(min);
-    renderMax(max);
-  });
+  const min = temperatureFormat(parseFloat(gat(gel('minContainer'), 'temperatureData')));
+  const max = temperatureFormat(parseFloat(gat(gel('maxContainer'), 'temperatureData')));
+  renderMin(min);
+  renderMax(max);
+}
 
-  const arrow = gel('arrowLeft');
-  arrow.addEventListener('click', () => {
-    gel('citiesTableView').style.display = 'block';
-    gel('weatherView').style.display = 'none';
-  });
+function showExplorerView() {
+  gel('citiesTableView').style.display = 'block';
+  gel('weatherView').style.display = 'none';
+}
+
+function watchWeatherViewControls() {
+  gel('temperatureToggle').addEventListener('click', () => toggleUnits());
+  gel('arrowLeft').addEventListener('click', () => showExplorerView());
 }
 
 function renderLoadTime(loadStartTime) {
@@ -140,6 +141,6 @@ function renderLoadTime(loadStartTime) {
 
 export {
   renderWeather,
-  addWeatherListeners,
+  watchWeatherViewControls,
   renderLoadTime,
 };

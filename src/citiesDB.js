@@ -1,7 +1,7 @@
 import { appAlert } from './utils';
 
-function loadCities(cities, callBack) {
-  const citiesTB = cities.sort((a, b) => {
+async function sortedCities(cities, callBack) {
+  const citiesTB = await cities.sort((a, b) => {
     if (a.country === b.country) {
       return a.name > b.name;
     }
@@ -10,11 +10,11 @@ function loadCities(cities, callBack) {
   callBack(citiesTB);
 }
 
-function getCities(callBack) {
+async function getCities(callBack) {
   const citiesURL = './cities.json';
-  fetch(citiesURL)
+  await fetch(citiesURL)
     .then((response) => response.json())
-    .then((data) => loadCities(data, callBack))
+    .then((data) => sortedCities(data, callBack))
     .catch((err) => appAlert('Error : '.concat(err)));
 }
 
@@ -31,7 +31,19 @@ function findCities(citiesTB, src) {
   return citiesFound;
 }
 
+function loadCountryCities(citiesTB, code) {
+  const countryCities = [];
+  for (let index = 0; index < citiesTB.length; index += 1) {
+    const element = citiesTB[index];
+    if (element.country === code) {
+      countryCities.push(element);
+    }
+  }
+  return countryCities;
+}
+
 export {
   getCities,
   findCities,
+  loadCountryCities,
 };

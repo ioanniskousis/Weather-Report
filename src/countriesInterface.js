@@ -1,4 +1,3 @@
-// import getCountries from './countriesDB';
 import showSearchSource from './searchSource';
 import { gel, crel, doc } from './utils';
 
@@ -22,6 +21,7 @@ function renderCountry(country, callBack) {
     callBack(country.code);
   });
 }
+
 function renderCountries(countries, callBack) {
   showSearchSource(1);
   const citiesTableBody = gel('citiesTableBody');
@@ -32,4 +32,16 @@ function renderCountries(countries, callBack) {
   }
 }
 
-export default renderCountries;
+function watchCountrySearchButton(callback) {
+  gel('searchCountryButton').addEventListener('click', () => {
+    callback();
+  });
+  gel('searchCountryInput').addEventListener('keypress', e => {
+    if (e.keyCode === 13) callback();
+  });
+}
+
+export {
+  renderCountries,
+  watchCountrySearchButton,
+};

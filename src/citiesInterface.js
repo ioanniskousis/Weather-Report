@@ -40,4 +40,16 @@ function renderCities(cities, callBack) {
   }
 }
 
-export default renderCities;
+function watchCitySearchButton(callback) {
+  gel('searchCityButton').addEventListener('click', () => {
+    callback();
+  });
+  gel('searchCityInput').addEventListener('keypress', e => {
+    if (e.keyCode === 13) callback();
+  });
+}
+
+export {
+  renderCities,
+  watchCitySearchButton,
+};

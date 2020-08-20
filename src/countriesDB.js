@@ -1,15 +1,15 @@
 import { appAlert } from './utils';
 
-function loadCountries(countries, callBack) {
-  const countriesTB = countries.sort((a, b) => a.name > b.name);
+async function sortedCountries(countries, callBack) {
+  const countriesTB = await countries.sort((a, b) => a.name > b.name);
   callBack(countriesTB);
 }
 
-function getCountries(callBack) {
+async function getCountries(callBack) {
   const citiesURL = './countries.json';
-  fetch(citiesURL)
+  await fetch(citiesURL)
     .then((response) => response.json())
-    .then((data) => loadCountries(data, callBack))
+    .then((countries) => sortedCountries(countries, callBack))
     .catch((err) => appAlert('Error : '.concat(err)));
 }
 

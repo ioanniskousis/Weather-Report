@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather-Report</title>
+</head>
+<body>
+  <main id="main">
+    <div id="citiesTableView">
+      <div id="citiesTableHeader">
+        <div id="searchCity">
+          <input type="text" id="searchCityInput" placeholder="search city"/>
+          <div id="searchCityButton"></div>
+        </div>
+        <div id="searchCountry">
+          <input type="text" id="searchCountryInput" placeholder="search country"/>
+          <div id="searchCountryButton"></div>
+        </div>
+        <div class="citiesTabsBar">
+          <div class="explorerTab explorerTabSelected" data="Favourites">Favorites</div>
+          <div class="explorerTab" data="Cities">Cities</div>
+          <div class="explorerTab" data="Countries">Countries</div>
+        </div>
+      </div >
+      <div id="citiesTableBody">
+      </div>
+    </div>
+  
+    <div id="weatherView">
+      <div id="weatherViewHeader">
+        <div id="arrowLeft"></div>
+        <p id="weatherCityName"></p>
+      </div>
+      <div id="weatherViewBody">
+        <div id="weatherBackground"></div>
+        <div id="weatherViewBodyTopPanel">
+          <div id="weatherViewTemperaturePanel" temperatureUnit="0"></div>
+          <div id="temperatureLabel">Temperature</div>
+          <div id="temperatureToggle">UNIT &deg;F / &deg;C</div>
+        </div>
+        <div id="minmaxContainer">
+          <div id="minContainer"></div>
+          <div id="maxContainer"></div>
+        </div>
+        <div id="weatherDescriptionContainer">
+          <div id="weatherMain"></div>
+          <div id="weatherDescription"></div>
+        </div>
+        <p id="allData"></p>
+      </div>
+      <div id="responseTimeContainer"></div>
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

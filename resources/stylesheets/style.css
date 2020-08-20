@@ -1,0 +1,399 @@
+* ::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+body {
+  height: 100%;
+  background-color: white;
+  padding: 0;
+  margin: 0;
+}
+
+main {
+  position: relative;
+  background-color: #000;
+  width: 100%;
+  height: 100%;
+  border: 4px solid rgb(48, 136, 203);
+  display: flex;
+}
+
+#citiesTableView {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  border-right: 4px solid rgb(48, 136, 203);
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#citiesTableHeader,
+#weatherViewHeader {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 140px;
+  border-bottom: 4px solid rgb(48, 136, 203);
+  font-size: 28px;
+}
+
+#weatherViewHeader {
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#weatherCityName {
+  font-size: 36px;
+  margin: 0;
+  flex: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#weatherCountryName {
+  flex: 4;
+  font-size: 16px;
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+}
+
+#searchCity,
+#searchCountry {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#searchCountry {
+  visibility: hidden;
+  display: none;
+}
+
+#searchCityInput,
+#searchCountryInput {
+  margin: auto 5px auto 10px;
+  font-size: medium;
+  padding: 10px 20px;
+  background-color: black;
+  color: white;
+  outline: none;
+  width: calc(100% - 70px);
+  border: 1px solid #555;
+}
+
+#searchCityButton,
+#searchCountryButton {
+  width: 40px;
+  height: 40px;
+  margin: auto 10px auto 5px;
+  display: inline-block;
+  background-image: url('../images/search.png');
+  background-position: center;
+  background-size: 50%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+#searchCityButton:hover,
+#searchCountryButton:hover {
+  background-color: #555;
+}
+
+#searchCityButton:active,
+#searchCountryButton:active {
+  background-color: #888;
+}
+
+.citiesTabsBar {
+  width: 100%;
+  height: 76px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+}
+
+.explorerTab {
+  flex: 1;
+  margin: 30px 5px 0 5px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  background-color: #333;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.explorerTabSelected {
+  background-color: #777;
+  box-shadow: 0 0 4px 4px rgba(255, 255, 255, 0.5);
+}
+
+.citiesTabsBar div:hover {
+  background-color: #555;
+}
+
+.citiesTabsBar div:active {
+  background-color: #777;
+  cursor: pointer;
+}
+
+#citiesTableBody,
+#countriesTableBody,
+#weatherViewBody {
+  position: absolute;
+  left: 0;
+  top: 140px;
+  width: 100%;
+  height: calc(100% - 140px);
+  overflow: auto;
+  padding: 0 10px 10px 10px;
+}
+
+#weatherViewBody {
+  top: 60px;
+  height: calc(100% - 60px);
+}
+
+.citiesTableRow,
+.countriesTableRow {
+  margin-top: 10px;
+  border: 1px solid #aaa;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.citiesTableRow:hover {
+  background-color: #555;
+}
+
+.citiesTableRow:active {
+  background-color: #888;
+}
+
+#weatherView {
+  position: relative;
+  display: block;
+  flex: 2;
+  padding: 0 10px;
+  color: white;
+}
+
+#weatherViewBodyTopPanel {
+  position: relative;
+  margin-top: 10px;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#weatherViewTemperaturePanel {
+  padding: 0 40px;
+  height: 100%;
+  font-size: 14vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#weatherViewTemperaturePanel > span {
+  font-size: 2vw;
+  margin-bottom: -7vw;
+}
+
+#temperatureToggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  padding: 10px;
+}
+
+#temperatureToggle:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+#temperatureToggle:active {
+  background-color: rgba(100, 100, 100, 0.5);
+}
+
+#temperatureLabel {
+  position: absolute;
+  top: 10px;
+  width: 200px;
+  font-size: 18px;
+  text-align: center;
+  left: calc(50% - 100px);
+}
+
+#arrowLeft {
+  width: 80px;
+  height: 100%;
+  background-image: url('../images/arrow-left-white.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 32px 32px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  visibility: hidden;
+}
+
+#arrowLeft:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  background-image: url('../images/arrow-left.png');
+}
+
+#minmaxContainer,
+#weatherDescriptionContainer {
+  height: 60px;
+  display: flex;
+  border-top: 1px solid #555;
+  border-bottom: 1px solid #555;
+  padding: 0 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#minContainer,
+#maxContainer,
+#weatherMain,
+#weatherDescription {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+  color: white;
+}
+
+#minContainer {
+  justify-content: flex-start;
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+}
+
+#maxContainer {
+  justify-content: flex-end;
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+}
+
+#weatherMain,
+#weatherDescription {
+  justify-content: center;
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+}
+
+#weatherBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  opacity: 0.5;
+}
+
+#responseTimeContainer {
+  position: absolute;
+  width: 220px;
+  height: 30px;
+  bottom: 0;
+  left: calc(50% - 110px);
+  background-color: #aaa;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(10, 50, 90);
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 4px 4px 0 0;
+}
+
+.sunShine {
+  background-image: url('../images/sunshine.jpg');
+}
+
+.clouds {
+  background-image: url('../images/clouds.jpg');
+}
+
+.rain {
+  background-image: url('../images/rain.jpg');
+}
+
+.haze {
+  background-image: url('../images/haze.png');
+}
+
+.snow {
+  background-image: url('../images/snow.jpg');
+}
+
+.fog {
+  background-image: url('../images/fog.jpg');
+}
+
+@media screen and (max-width: 768px) {
+  main {
+    flex-direction: column;
+  }
+
+  #citiesTableView {
+    border: none;
+  }
+
+  #citiesTableView,
+  #weatherView {
+    width: 100%;
+  }
+
+  #arrowLeft {
+    visibility: visible;
+  }
+
+  #weatherViewTemperaturePanel {
+    font-size: 20vw;
+  }
+
+  #weatherViewTemperaturePanel > span {
+    font-size: 4vw;
+    margin-bottom: -10vw;
+  }
+}
